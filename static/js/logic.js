@@ -17,14 +17,56 @@ function createFeatures(earthquakeData) {
 
   }
 
+
+
   // Create a GeoJSON layer that contains the features array on the earthquakeData object.
   // Run the onEachFeature function once for each piece of data in the array.
   var earthquakes=  L.geoJson(earthquakeData, {
     pointToLayer: function(feature, layer) {
+        
+        // Different radius depending on magnitude
+        if (feature.properties.mag > 6.0){
+            eRadius = 5 * 10;
+        }
+        else if (feature.properties.mag > 5.0){
+            eRadius = 4 * 10
+        }
+        else if (feature.properties.mag > 4.0){
+            eRadius = 3 * 10
+        }
+        else if (feature.properties.mag > 3.0){
+            eRadius = 2 * 10 
+        }
+        else{
+            eRadius = 10
+        }
+
+        // Different color depending on depth
+        if (feature.geometry.coordinates[2] > 90){
+            eColor = "#FF5F65"
+        }
+        else if (feature.geometry.coordinates[2] <= 90 && feature.geometry.coordinates[2] > 70){
+            eColor = "#FCA35D"
+        }
+        else if (feature.geometry.coordinates[2] <= 70 && feature.geometry.coordinates[2] > 50){
+            eColor = "#FDB72A"
+        }
+        else if (feature.geometry.coordinates[2] <= 50 && feature.geometry.coordinates[2] > 30){
+            eColor = "#F7DB11"
+        }
+        else if (feature.geometry.coordinates[2] <= 90 && feature.geometry.coordinates[2] > 70){
+            eColor = "#DCF400"
+        }
+        else{
+            eColor = "#A3F600"
+        }
+        
         return new L.CircleMarker(layer, {
-        radius: 5,
-        color: '#FF0000'
-      });
+            fillOpacity: 0.5,
+            color: eColor,
+            fillColor: eColor,
+            radius: eRadius
+        });
     },
     onEachFeature: onEachFeature
   })
