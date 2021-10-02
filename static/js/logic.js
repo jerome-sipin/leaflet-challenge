@@ -14,13 +14,20 @@ function createFeatures(earthquakeData) {
   // Function runs for every feature in the array. The popup describes where, when, the magnitude, and the depth of the earthquake.
   function onEachFeature(feature, layer) {
     layer.bindPopup("<h3> Place: " + feature.properties.place + "</h3><h3>Magnitude:" + feature.properties.mag + "</h3><h3>Depth:" + feature.geometry.coordinates[2] + "</h3><h3>Time:" + new Date(feature.properties.time) + "</h3>")
+
   }
 
   // Create a GeoJSON layer that contains the features array on the earthquakeData object.
   // Run the onEachFeature function once for each piece of data in the array.
-  var earthquakes = L.geoJSON(earthquakeData, {
+  var earthquakes=  L.geoJson(earthquakeData, {
+    pointToLayer: function(feature, layer) {
+        return new L.CircleMarker(layer, {
+        radius: 5,
+        color: '#FF0000'
+      });
+    },
     onEachFeature: onEachFeature
-  });
+  })
 
   // Send earthquake markers to map
   createMap(earthquakes);
