@@ -113,7 +113,29 @@ function createMap(earthquakes) {
     collapsed: false
   }).addTo(myMap);
 
+  var legend = L.control({ position: "bottomright" });
+
+  legend.onAdd = function(map) {
+    var div = L.DomUtil.create("div", "legend");
+    div.innerHTML += "<h4>Earthquake Depth (km)</h4>";
+    div.innerHTML += '<i style="background: #A3F600"></i><span>-10 - 10</span><br>';
+    div.innerHTML += '<i style="background: #DCF400"></i><span>10 - 30</span><br>';
+    div.innerHTML += '<i style="background: #F7DB11"></i><span>30 - 50</span><br>';
+    div.innerHTML += '<i style="background: #FDB72A"></i><span>50 - 70</span><br>';
+    div.innerHTML += '<i style="background: #FCA35D"></i><span>70 - 90</span><br>';
+    div.innerHTML += '<i style="background: #FF5F65"></i><span>90+</span><br>';
+    
+  
+    return div;
+  };
+  
+  legend.addTo(myMap);
+  
 }
+
+
+
+
 // // Get URL for significant earthquakes over the past month.
 // var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson"
 
